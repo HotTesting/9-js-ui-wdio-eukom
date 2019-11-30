@@ -2,21 +2,20 @@
 
 import * as assert from 'assert';
 
-describe('Search results', function() {
-    it('should be empty', function() {
+describe('Items search', function() {
+    it(`should redirect to 'no matching results' in case no items matched`, function() {
         browser.url(`/`);
         const searchItem = new Date().getTime() / 1000;
         $('[type=search]').setValue(searchItem);
         browser.keys('Enter');
 
-        const emptySearchSection = $('#box-search-results em');
-        assert(emptySearchSection.isDisplayed(), `Search results area is not empty`);
+        const searchResultsSection = $('#box-search-results');
+        assert(searchResultsSection.isDisplayed(), `Search results section cannot be found`);
+
+        const emptySearchResultsMessage = 'No matching results';
+        const emptySearchResults = searchResultsSection.$(`em*=${emptySearchResultsMessage}`);
+        assert(emptySearchResults.isDisplayed(), `Search results section doesn't contain message "${emptySearchResultsMessage}"`);
         
-        const emptySearchExpectedText = 'No matching results';
-        const emptySearchActualText = emptySearchSection.getText();
-        assert(emptySearchExpectedText === emptySearchActualText,
-            `Message "${emptySearchActualText}" is shown rather than "${emptySearchExpectedText}"`);
-            
         browser.pause(2000);
     })
 })
