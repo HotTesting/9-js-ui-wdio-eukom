@@ -32,13 +32,30 @@ export class ProductDetailsPage extends BasePage {
         super.open(this.productCatalog.regularProduct);
     }
 
+    openParametrizedProduct(){
+        super.open(this.productCatalog.parametrizedProduct);
+    }
+
     private productCatalog = {
         regularProduct: '/rubber-ducks-c-1/red-duck-p-3',
         discountedProduct: '/rubber-ducks-c-1/blue-duck-p-4',
+        parametrizedProduct: '/rubber-ducks-c-1/premium-ducks-c-2/vip-yellow-duck-p-6'
     };
 
-    saleAttributesShown(){
-        return ( $('* #box-product .sale').isDisplayed() && $('* #box-product .campaign-price').isDisplayed());
+    saleAttributesShown(): boolean {
+        return ($('* #box-product .sale').isDisplayed() && $('* #box-product .campaign-price').isDisplayed());
+    }
+
+    sizeSelectorShown(): boolean {
+        return ($('.buy_now .select-wrapper').isDisplayed());
+    }
+
+    selectProductSize(productSize: string) {
+        $('.buy_now .select-wrapper .form-control').selectByAttribute('value', productSize);
+    }
+
+    getPriceAdjust(dropDownItem: WebdriverIO.Element): number {
+        return parseFloat(dropDownItem.getAttribute('data-price-adjust'));
     }
 }
 
