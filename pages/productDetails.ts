@@ -24,9 +24,22 @@ export class ProductDetailsPage extends BasePage {
         return productDetails;
     }
 
+    openDiscountedProduct(){
+        super.open(this.productCatalog.discountedProduct);
+    }
+
+    openRegularProduct(){
+        super.open(this.productCatalog.regularProduct);
+    }
+
     productCatalog = {
         regularProduct: '/rubber-ducks-c-1/red-duck-p-3',
+        discountedProduct: '/rubber-ducks-c-1/blue-duck-p-4',
     };
+
+    saleAttributesShown(){
+        return ( $('* #box-product .sale').isDisplayed() && $('* #box-product .campaign-price').isDisplayed());
+    }
 }
 
 export const ProductDetails = new ProductDetailsPage();
