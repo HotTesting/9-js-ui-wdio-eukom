@@ -4,6 +4,7 @@ import { ProductDetailsModel } from '../models/productDetailsModel';
 export class CheckoutPage extends BasePage {
     url = '/checkout';
     shoppingCart: ShoppingCart = new ShoppingCart();
+    customerDetailsForm: CustomerDetailsForm = new CustomerDetailsForm();
 
     private get noItemsLabel() { return $('.cart.wrapper em') };
     private get checkoutContainer() {return $('#box-checkout-cart')};
@@ -23,6 +24,10 @@ export class CheckoutPage extends BasePage {
 
     isItemsInCart() {
         return (this.checkoutContainer.isDisplayed());
+    }
+
+    confirmOrder() {
+        $('[name=confirm_order]').click();
     }
 }
 
@@ -60,6 +65,35 @@ class Item {
         productInCartDetails.price = this.getProductPrice();
 
         return productInCartDetails;
+    }
+}
+
+class CustomerDetailsForm {
+    private get container(): WebdriverIO.Element { return $('#box-checkout #box-checkout-customer') }
+
+    public get firstName(): WebdriverIO.Element { return this.container.$('[name=firstname]') }
+    public get lastName(): WebdriverIO.Element { return this.container.$('[name=lastname]') }
+    public get address1(): WebdriverIO.Element { return this.container.$('[name=address1]') }
+    public get postcode(): WebdriverIO.Element { return this.container.$('[name=postcode]') }
+    public get city(): WebdriverIO.Element { return this.container.$('[name=city]') }
+    public get country_code(): WebdriverIO.Element { return this.container.$('[name=country_code]') }
+    public get email(): WebdriverIO.Element { return this.container.$('[name=email]') }
+    public get phone(): WebdriverIO.Element { return this.container.$('[name=phone]') }
+    
+    public populateMandatotyFields() {
+        const timeStamp = Math.floor(new Date().getTime() / 1000);
+        const email = `test${timeStamp}@grr.la`;
+        
+        this.firstName.setValue(timeStamp);
+        this.lastName.setValue(timeStamp);
+        this.address1.setValue(timeStamp);
+        this.postcode.setValue(Math.floor(timeStamp/100000));
+        this.city.setValue(timeStamp);
+        this.email.setValue(email);
+        this.phone.setValue(`+${timeStamp}`);
+        this.country_code.selectByVisibleText('Turkey');
+        
+        this.container.$('[name=save_customer_details]').click();
     }
 }
 

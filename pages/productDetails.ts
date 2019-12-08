@@ -23,6 +23,10 @@ export class ProductDetailsPage extends BasePage {
 
         return productDetails;
     }
+
+    productCatalog = {
+        regularProduct: '/rubber-ducks-c-1/red-duck-p-3',
+    };
 }
 
 export const ProductDetails = new ProductDetailsPage();
