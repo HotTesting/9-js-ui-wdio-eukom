@@ -3,13 +3,15 @@ import { expect } from 'chai';
 
 describe('Order', function(){
     it('is successfull for regular product', function(){
-        App.product.open(App.product.productCatalog.regularProduct);
+        App.product.openRegularProduct();
         const productDetails = App.product.getProductDetails();
-        
+
         App.product.addToCart();
         App.checkout.open();
-        browser.pause(1000);
         expect(App.checkout.shoppingCart.items.length).to.equal(1);
+
+        const productInCartDetails = App.checkout.shoppingCart.items[0].getProductInCartDetails();
+        expect(productInCartDetails.toString()).to.be.equal(productDetails.toString());
 
         App.checkout.customerDetailsForm.populateMandatotyFields();
         browser.pause(1000);

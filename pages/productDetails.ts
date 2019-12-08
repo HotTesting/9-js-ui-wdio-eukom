@@ -32,7 +32,7 @@ export class ProductDetailsPage extends BasePage {
         super.open(this.productCatalog.regularProduct);
     }
 
-    productCatalog = {
+    private productCatalog = {
         regularProduct: '/rubber-ducks-c-1/red-duck-p-3',
         discountedProduct: '/rubber-ducks-c-1/blue-duck-p-4',
     };
