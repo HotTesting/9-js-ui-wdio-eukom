@@ -15,11 +15,16 @@ export class ProductDetailsPage extends BasePage {
         return $('h1.title').getText();
     }
 
+    public getProductQuantity(): number {
+        return parseInt($('.buy_now [name=quantity]').getValue());
+    }
+
     getProductDetails(): ProductDetailsModel {
         const productDetails = new ProductDetailsModel();
 
         productDetails.name = this.getProductName();
         productDetails.price = this.getProductPrice();
+        productDetails.quantity = this.getProductQuantity();
 
         return productDetails;
     }
@@ -54,9 +59,13 @@ export class ProductDetailsPage extends BasePage {
         $('.buy_now .select-wrapper .form-control').selectByAttribute('value', productSize);
     }
 
+    setProductQuantity(productQantity: number) {
+        $('.buy_now [name=quantity]').setValue(productQantity);
+    }
+
     getPriceAdjust(dropDownItem: WebdriverIO.Element): number {
         return parseFloat(dropDownItem.getAttribute('data-price-adjust'));
     }
-}
+}   
 
 export const ProductDetails = new ProductDetailsPage();

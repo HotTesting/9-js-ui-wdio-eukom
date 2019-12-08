@@ -1,5 +1,6 @@
 import { BasePage } from './base';
 import { ProductDetailsModel } from '../models/productDetailsModel';
+import { parse } from 'path';
 
 export class CheckoutPage extends BasePage {
     url = '/checkout';
@@ -58,11 +59,16 @@ class Item {
         return parseFloat(this.container.getAttribute('data-price'));
     }
 
+    public getProductQuantity(): number {
+        return parseInt(this.container.$('[data-type=number]').getValue());
+    }
+
     getProductInCartDetails(): ProductDetailsModel {
         const productInCartDetails = new ProductDetailsModel();
 
         productInCartDetails.name = this.getProductName();
         productInCartDetails.price = this.getProductPrice();
+        productInCartDetails.quantity = this.getProductQuantity();
 
         return productInCartDetails;
     }
