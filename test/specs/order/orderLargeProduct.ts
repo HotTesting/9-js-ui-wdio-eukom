@@ -20,7 +20,6 @@ describe('Order', function() {
         expect(productInCartDetails.toString()).to.be.equal(productDetails.toString());
 
         App.checkout.customerDetailsForm.populateMandatotyFields();
-        browser.pause(1000);
         App.checkout.confirmOrder();
 
         expect(App.orderSuccess.confirmationPageShown()).to.be.true;

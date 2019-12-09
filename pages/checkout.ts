@@ -100,6 +100,7 @@ class CustomerDetailsForm {
         this.country_code.selectByVisibleText('Turkey');
         
         this.container.$('[name=save_customer_details]').click();
+        browser.pause(1000);
     }
 }
 
